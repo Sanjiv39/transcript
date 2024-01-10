@@ -1,0 +1,120 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+:root{
+    --light-grey: #4e5055;
+    --dark-grey: #2A2B2D;
+    --greeny: #9cf15b;
+    --trans-greeny: #9cf15b8e;
+    --trans-black: #0000003d;
+    --trans-white: #fffdfd3d;
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+button, input{
+    outline: none;
+    border: none;
+    font: inherit;
+    background: transparent;
+    color: inherit;
+}
+
+/* Utils class */
+.btn{
+    cursor: pointer;
+}
+
+.pad-min{
+    padding: 12px 20px;
+}
+
+.med-fnt{
+    font-weight: 500;
+}
+.bold-fnt{
+    font-weight: 600;
+}
+
+.brd-min{
+    border-radius: 8px;
+}
+
+.flex{
+    display: flex;
+}
+.flex.jt-sp-b{
+    justify-content: space-between;
+}
+.flex.al-cen{
+    align-items: center;
+}
+
+.bg-green{
+    background: var(--greeny);
+    color: var(--dark-grey);
+}
+.bg-white{
+    background: white;
+    color: black;
+}
+
+/* Start */
+
+.container{
+    width: 100vw;
+    background: #000000;
+    color: white;
+    font-family: "Inter-Medium", "Inter", sans-serif;
+}
+
+/* Navbar */
+.navbar{
+    padding: 20px 15px;
+}
+
+.nav-logo{
+    width: 150px;
+    height: 45px;
+}
+.nav-right{
+    display: flex;
+}
+.nav-right .btn:first-child{
+    line-height: 1.5em;
+    padding: 12px 20px;
+    border: 1px solid var(--light-grey);
+    color: var(--dark-grey);
+    transition: all ease 200ms;
+}
+
+/* Main container */
+.main-container{
+    margin-top: 100px;
+}
+.audio-btns{
+    gap: 10px;
+    flex-wrap: wrap;
+    color: black;
+    max-width: 350px;
+    margin: 0 auto;
+    font-family: 'Inter Medium', 'Inter', sans-serif;
+}
+.audio-btns>.btn{
+    position: relative;
+    line-height: 1.5em;
+    transition: all ease 100ms;
+}
+.audio-btns>.btn:hover{
+    box-shadow: 1px 1px 5px var(--trans-greeny), 1px -1px 5px var(--trans-greeny), -1px -1px 5px var(--trans-greeny), -1px 1px 5px var(--trans-greeny);
+}
+.audio-btns>.btn input[type='file']{
+    /* opacity: 0; */
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: inherit;
+    /* z-index: -1; */
+    width: 100%;
+    height: 100%;
+}
