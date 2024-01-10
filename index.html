@@ -1,39 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TheraSync</title>
-    <link rel="shortcut icon" href="https://framerusercontent.com/images/tYdDuQMxYFUc2Kyjwic8sVQFb4Y.png"
-        type="image/x-icon">
-    <!-- https://framerusercontent.com/images/47K5AZB6DhQsCFEaUj3288QQ.jpg -->
-    <link rel="stylesheet" href="./style.css">
-</head>
+    <link
+      rel="shortcut icon"
+      href="https://framerusercontent.com/images/tYdDuQMxYFUc2Kyjwic8sVQFb4Y.png"
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
 
-<body>
+  <body>
     <div class="container">
+      <div class="max-width-wrapper">
         <div class="navbar">
-            <div class="nav-wrap flex jt-sp-b al-cen">
-                <img class="nav-logo" src="https://framerusercontent.com/images/47K5AZB6DhQsCFEaUj3288QQ.jpg" alt="logo"
-                    srcset="">
-                <div class="nav-right flex al-cen">
-                    <div class='btn brd-min nav-btn'>Start Free Trial</div>
-                    <div class='menu btn'></div>
-                </div>
-            </div>
+          <div class="nav-wrap flex jt-cen al-cen">
+            <img
+              class="nav-logo"
+              src="./assets/logo.webp"
+              alt="logo"
+              srcset=""
+            />
+          </div>
         </div>
-        <div class="main-container">
-            <div class="audio-btns flex jt-sp-b al-cen">
-                <div class="btn pad-min brd-min bg-green upload">
-                    <!-- <input type="file" class="btn"/> -->
-                    Upload Audio</div>
-                <div class="btn pad-min brd-min bg-green record">Record Audio</div>
-                <div class="files"></div>
-            </div>
-        </div>
-    </div>
-    <script src="./script.js"></script>
-</body>
 
+        <div class="main-container">
+          <div class="header-title">
+            <h2>
+              Upload or Record your audio samples and our GenAI will do the
+              rest!
+            </h2>
+            <p>
+              ✨ Our GenAI will transcript the audio and generate a summary of
+              the conversation along with a SOAP document.
+            </p>
+          </div>
+
+          <div class="audio-btns flex jt-sp-b al-cen">
+            <div class="btn pad-min brd-min bg-green upload">
+              <img src="./assets/upload.svg" alt="Upload Icon" /> Upload Audio
+            </div>
+
+            <div class="btn pad-min brd-min bg-green record">
+              <img src="./assets/mic.svg" alt="Record Icon" /> Record Audio
+            </div>
+
+            <div class="btn pad-min brd-min bg-green download-icon">
+              <img src="./assets/download.svg" alt="Download Icon" /> Download
+              Audio
+            </div>
+
+            <div class="files"></div>
+          </div>
+
+          <div class="raw-transcript-container">
+            <h3>
+              <span>📑 Raw Transcript Text </span>
+              <span class="copy-btn"
+                >Copy <img src="./assets/copy.svg" alt="Copy Icon"
+              /></span>
+            </h3>
+            <div class="transcript-text-container">
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Error
+              recusandae, dolore quidem iste, esse iusto aliquid repellat
+              pariatur officiis suscipit sequi. Exercitationem ullam quas earum
+              debitis aliquam quam repellendus. Qui? Lorem ipsum, dolor sit amet
+              consectetur adipisicing elit. Error recusandae, dolore quidem
+              iste, esse iusto aliquid repellat pariatur officiis suscipit
+              sequi. Exercitationem ullam quas earum debitis aliquam quam
+              repellendus. Qui? Lorem ipsum, dolor sit amet consectetur
+              adipisicing elit. Error recusandae, dolore quidem iste, esse iusto
+              aliquid repellat pariatur officiis suscipit sequi. Exercitationem
+              ullam quas earum debitis aliquam quam repellendus. Qui?
+            </div>
+          </div>
+
+          <div class="raw-transcript-container">
+            <h3>
+              <span>📑 Summary Docs </span>
+              <span class="copy-btn"
+                >Copy <img src="./assets/copy.svg" alt="Copy Icon"
+              /></span>
+            </h3>
+            <div class="transcript-text-container">
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Error
+              recusandae, dolore quidem iste, esse iusto aliquid repellat
+              pariatur officiis suscipit sequi. Exercitationem ullam quas earum
+              debitis aliquam quam repellendus. Qui? Lorem ipsum, dolor sit amet
+              consectetur adipisicing elit. Error recusandae, dolore quidem
+              iste, esse iusto aliquid repellat pariatur officiis suscipit
+              sequi. Exercitationem ullam quas earum debitis aliquam quam
+              repellendus. Qui? Lorem ipsum, dolor sit amet consectetur
+              adipisicing elit. Error recusandae, dolore quidem iste, esse iusto
+              aliquid repellat pariatur officiis suscipit sequi. Exercitationem
+              ullam quas earum debitis aliquam quam repellendus. Qui?
+            </div>
+          </div>
+
+          <div class="audio-btns flex jt-sp-b al-cen">
+            <div class="btn pad-min brd-min bg-green generate-soap">
+              <img src="./assets/mic.svg" alt="Record Icon" /> Generate SOAP
+              Document
+            </div>
+
+            <div class="btn pad-min brd-min bg-green download-soap">
+              <img src="./assets/download.svg" alt="Download Icon" /> Download
+              SOAP Document
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="./script.js"></script>
+  </body>
 </html>

@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
 :root{
     --light-grey: #4e5055;
     --dark-grey: #2A2B2D;
@@ -46,6 +47,9 @@ button, input{
 .flex.jt-sp-b{
     justify-content: space-between;
 }
+.flex.jt-cen{
+    justify-content: center;
+}
 .flex.al-cen{
     align-items: center;
 }
@@ -60,22 +64,28 @@ button, input{
 }
 
 /* Start */
-
 .container{
-    width: 100vw;
-    background: #000000;
+    width: 100%;
+    min-height: 100vh;
+    padding: 0 0 32px 0;
+    background-color: #000000;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
     color: white;
     font-family: "Inter-Medium", "Inter", sans-serif;
+}
+.max-width-wrapper {
+    max-width: 1200px;
 }
 
 /* Navbar */
 .navbar{
-    padding: 20px 15px;
+    padding: 24px 16px;
 }
-
 .nav-logo{
-    width: 150px;
-    height: 45px;
+    width: 195px;
+    height: 60px;
 }
 .nav-right{
     display: flex;
@@ -90,31 +100,130 @@ button, input{
 
 /* Main container */
 .main-container{
-    margin-top: 100px;
+    padding: 40px 0 0 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 24px;
+}
+.header-title {
+    padding: 0 16px;
+    color: #EFF1F2;
+    text-align: center;
+    text-wrap: balance;
+    font-family: "Inter", sans-serif;
+    font-weight: bold;
+    letter-spacing: .7px;
+    line-height: 1.5rem;
+}
+.header-title h2 {
+    max-width: 950px;
+    font-size: 28px;
+}
+.header-title p {
+    max-width: 900px;
+    padding: 24px 16px 0;
+    color: #BABBC3;
+    font-size: 16px;
 }
 .audio-btns{
-    gap: 10px;
+    gap: 24px;
+    justify-content: space-between;
     flex-wrap: wrap;
     color: black;
-    max-width: 350px;
-    margin: 0 auto;
     font-family: 'Inter Medium', 'Inter', sans-serif;
 }
 .audio-btns>.btn{
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
     line-height: 1.5em;
     transition: all ease 100ms;
+}
+.audio-btns > .btn.upload img,
+.audio-btns > .btn.generate-soap img,
+.audio-btns > .btn.download-soap img,
+.audio-btns > .btn.upload img,
+.audio-btns > .btn.record img {
+    width: 28px;
+    height: 28px;
 }
 .audio-btns>.btn:hover{
     box-shadow: 1px 1px 5px var(--trans-greeny), 1px -1px 5px var(--trans-greeny), -1px -1px 5px var(--trans-greeny), -1px 1px 5px var(--trans-greeny);
 }
 .audio-btns>.btn input[type='file']{
-    /* opacity: 0; */
     position: absolute;
     top: 0;
     left: 0;
     border-radius: inherit;
-    /* z-index: -1; */
     width: 100%;
     height: 100%;
+}
+.download-icon {
+    height: 48px;
+    padding: 0 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+.download-icon img {
+    width: 28px;
+    height: 28px;
+}
+
+/* Raw Transcript Container */
+.raw-transcript-container {
+    padding: 0 24px 24px;
+}
+.raw-transcript-container > h3 {
+    padding: 0 0 12px 0;
+    text-align: left;
+    font-size: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: "Inter", sans-serif;
+    letter-spacing: .7px;
+}
+.raw-transcript-container > h3 span.copy-btn {
+    padding: 4px 6px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #000000;
+    background-color: #9f9b9b;
+    border-radius: 6px;
+    border: 1px solid #9f9b9b;
+    font-size: 16px;
+    font-family: "Inter", sans-serif;
+    font-weight: normal;
+    letter-spacing: .7px;
+    cursor: pointer;
+    transition: background-color .2s linear, transform .15s linear;
+}
+.raw-transcript-container > h3 span.copy-btn:hover {
+    background-color: #9cf15b;
+}
+.raw-transcript-container > h3 span.copy-btn:active {
+    transform: scale(0.90);
+}
+.raw-transcript-container > h3 span.copy-btn img {
+    width: 16px;
+    height: 16px;
+}
+.transcript-text-container {
+    padding: 16px;
+    color: #000000;
+    background: linear-gradient(to bottom, #DFE2EA, #F3F3F8);
+    border: 1px solid #e4e7ed;
+    border-radius: 8px;
+    font-family: "Inter", sans-serif;
+    font-weight: normal;
+    font-style: normal;
+    letter-spacing: .7px;
+    line-height: 1.4rem;
 }
