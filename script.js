@@ -195,7 +195,7 @@ const typing = (el) => {
   document.querySelector('#summary').innerHTML = ''
   let str = `${el.toUpperCase()} ${loremstr}`
   scroller.push(setInterval(()=>{
-    console.log('i am scrolling '+el)
+    // console.log('i am scrolling '+el)
     scrollToEnd(el)
   }, 200))
   const options = {
