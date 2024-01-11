@@ -32,10 +32,12 @@
                     </p>
                 </div>
                 <div class="filename brd-min"></div>
+                <div class="file-progress"><div></div></div>
+                <!-- Record Upload Download -->
                 <div class="audio-btns flex jt-sp-b al-cen">
-                    <div class="btn pad-min brd-min bg-green upload">
+                    <button class="btn pad-min brd-min bg-green upload">
                         <img src="./assets/upload.svg" alt="Upload Icon" /> Upload Audio
-                    </div>
+                    </button>
 
                     <button class="btn pad-min brd-min bg-green record">
                         <img src="./assets/mic.svg" alt="Record Icon" /> Record Audio
@@ -46,29 +48,36 @@
                         Audio
                     </button>
                 </div>
+                <!-- Submit for analysis -->
                 <button class="btn flex pad-min brd-min bg-green submit-btn" disabled>
                     <img src="./assets/analysis.svg" alt="Analysis Icon" />
-                    Submit for analysis</button>
+                    Submit for analysis
+                </button>
+                <!-- Raw Transcript -->
                 <div class="raw-transcript-container">
                     <h3>
                         <span>📑 Raw Transcript Text </span>
                         <button disabled class="copy-btn btn">Copy <img src="./assets/copy.svg"
                                 alt="Copy Icon" /></button>
                     </h3>
-                    <div class="transcript-text-container" id="raw">Record or Upload Audio to generate raw transcript
+                    <div class="transcript-text-container">
+                        <div class="transcript-text-wrapper" id="raw">Record or Upload Audio to generate raw transcript
+                        </div>
                     </div>
                 </div>
-
+                <!-- Summary -->
                 <div class="raw-transcript-container">
                     <h3>
                         <span>📑 Summary Docs </span>
                         <button disabled class="copy-btn btn">Copy <img src="./assets/copy.svg"
                                 alt="Copy Icon" /></button>
                     </h3>
-                    <div class="transcript-text-container" id="summary">Record or Upload Audio to generate summary
-                        transcript</div>
+                    <div class="transcript-text-container">
+                        <div class="transcript-text-wrapper" id="summary">Record or Upload Audio to generate raw transcript
+                        </div>
+                    </div>
                 </div>
-
+                <!-- Soap -->
                 <div class="audio-btns flex jt-sp-b al-cen">
                     <div class="btn pad-min brd-min bg-green generate-soap">
                         <img src="./assets/mic.svg" alt="Record Icon" /> Generate SOAP

@@ -1,15 +1,19 @@
 /* The code is implementing a recording feature for audio using the MediaStream Recording API in
 JavaScript. */
 let fileName = document.querySelector('.filename')
+let fileProgress = document.querySelector('.file-progress')
 let uploadDiv = document.querySelector(".upload.btn");
 let recordDiv = document.querySelector(".record.btn");
 let downloadAudio = document.querySelector('.download-audio')
 let submitBtn = document.querySelector('.submit-btn')
 let copyBtns = document.querySelectorAll('.copy-btn')
+let textBoxes = document.querySelectorAll('.transcript-text-wrapper')
 let rawStatus = false
 let summaryStatus = false
 let date = new Date()
+let scroller = []
 
+// Utils functions
 const getDateStr = () => {
   let day = date.getDate()
   day = day <= 9 ? `0${day}` : `${day}`
@@ -31,8 +35,16 @@ const getSize = (bytes) => {
   return bytes;
 }
 
+const copy = (text) => {
+  navigator.clipboard.writeText(text)
+}
+
+// Status changers---------------------------------------------------------------------------------
+
 const changeRecordStatus = (status) => {
   status ? submitBtn.disabled = true : submitBtn.disabled = false
+  status ? uploadDiv.disabled = true : uploadDiv.disabled = false
+  status ? downloadAudio.disabled = true : downloadAudio.disabled = false
   recordDiv.classList.toggle("recording");
   let img = status ? 'mic-off' : 'mic'
   let text = status ? 'Stop Recording' : 'Record Audio'
@@ -55,11 +67,21 @@ const toggleRecordBtn = (type) => {
     let status = rawStatus && summaryStatus
     if (status) {
       recordDiv.disabled = false
+      uploadDiv.disabled = false
+      submitBtn.disabled = true
     } else {
       recordDiv.disabled = true
+      uploadDiv.disabled = true
     }
   }, 500)
 }
+
+const scrollToEnd = (id) => {
+  let div = document.querySelector(`#${id}`)
+  div.scrollTop = div.scrollHeight
+}
+
+// The audio class---------------------------------------------------------------------------------
 
 const audio = {
   audioBlob: undefined,
@@ -164,21 +186,35 @@ const audio = {
   },
 };
 
-// Typer---------------------------------------------------------------------------------------
-let loremstr = 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Error recusandae, dolore quidem iste, esse iusto aliquid repellat pariatur officiis suscipit sequi. Exercitationem ullam quas earum debitis aliquam quam repellendus. Qui? Lorem ipsum, dolor sit amet consectetur adipisicing elit. Error recusandae, dolore quidem iste, esse iusto aliquid repellat pariatur officiis suscipit sequi. Exercitationem ullam quas earum debitis aliquam quam repellendus. Qui? Lorem ipsum, dolor sit amet consectetur adipisicing elit. Error recusandae, dolore quidem iste, esse iusto aliquid repellat pariatur officiis suscipit sequi. Exercitationem ullam quas earum debitis aliquam quam repellendus. Qui?'
+// Typer-------------------------------------------------------------------------------------------
+
+let loremstr = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam et massa ut metus blandit aliquam nec a odio. Nullam fermentum lobortis volutpat. Aliquam cursus lorem eget ex pharetra pellentesque. Suspendisse ac consequat turpis. Nulla facilisi. Vivamus facilisis diam at mauris accumsan aliquam. Aliquam ut velit hendrerit, mollis nunc eu, feugiat risus. Morbi at nisi nunc. In sem quam, commodo et tortor condimentum, fermentum vulputate justo. Mauris malesuada urna tellus, dignissim bibendum metus tristique sit amet. Mauris convallis porttitor leo nec gravida. Nullam vitae lectus ante. Mauris hendrerit dui purus. Morbi sit amet convallis massa, vitae tempor tortor. Nunc sed nulla.'
 
 const typing = (el) => {
-  // document.querySelector('#raw').innerHTML = ''
-  // document.querySelector('#summary').innerHTML = ''
+  document.querySelector('#raw').innerHTML = ''
+  document.querySelector('#summary').innerHTML = ''
+  let str = `${el.toUpperCase()} ${loremstr}`
+  scroller.push(setInterval(()=>{
+    console.log('i am scrolling '+el)
+    scrollToEnd(el)
+  }, 200))
   const options = {
-    strings: [loremstr],
-    typeSpeed: 50,
+    strings: [str],
+    typeSpeed: 10,
     showCursor: false,
-    onBegin: () => { recordDiv.disabled = true },
+    onBegin: () => {
+      recordDiv.disabled = true;
+      uploadDiv.disabled = true
+      copyBtns.forEach((btn) => {
+        btn.disabled = true
+      })
+    },
     onComplete: () => {
-      toggleRecordBtn(el); copyBtns.forEach((btn) => {
+      toggleRecordBtn(el);
+      copyBtns.forEach((btn) => {
         btn.disabled = false
       })
+      scroller.forEach((scroller)=>{clearInterval(scroller)})
     }
   }
   switch (el) {
@@ -205,9 +241,35 @@ uploadDiv.addEventListener("click", () => {
     let files = [...input.files];
     let file = files[0];
     console.log(file);
-    fileName.style.display = 'block'
     let size = getSize(file.size)
-    fileName.innerText = `${file.name} (${size})`
+    // if (file.type.includes('audio')) {
+      submitBtn.disabled = true
+      downloadAudio.disabled = true
+      recordDiv.disabled = true
+      let reader = new FileReader()
+      reader.onloadstart = () => {
+        fileName.style.display = 'none'
+        fileProgress.style.display = 'block'
+      }
+      reader.onprogress = (e) => {
+        let status = (e.loaded / e.total) * 100
+        fileProgress.children[0].style.width = `${status}%`
+      }
+      reader.onloadend = () => {
+        console.log(reader.result)
+        setTimeout(() => {
+          fileProgress.style.display = 'none'
+          fileName.style.display = 'block'
+          fileName.innerText = `${file.name} \n(${size})`
+          submitBtn.disabled = false
+          recordDiv.disabled = false
+        }, 1000)
+      }
+      reader.onerror = () => {
+        console.log(reader.error)
+      }
+      reader.readAsArrayBuffer(file)
+    // }
   };
 });
 
@@ -224,6 +286,13 @@ downloadAudio.addEventListener('click', () => {
 })
 
 submitBtn.addEventListener('click', () => {
+  submitBtn.disabled = true
   typing('raw')
   typing('summary')
+})
+
+copyBtns.forEach((btn) => {
+  btn.addEventListener('click', () => {
+    copy(btn.parentElement.nextElementSibling.children[0].innerText)
+  })
 })

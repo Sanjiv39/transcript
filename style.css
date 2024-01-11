@@ -162,8 +162,29 @@ input {
     border: 1px solid #e4e7ed;
     letter-spacing: .7px;
     line-height: 1.4rem;
+    margin: 0 25px;
+    word-wrap: break-word;
+    line-break: anywhere;
+}
+/* Progress */
+.file-progress{
+    box-shadow: 1px 1px 4px #7575ff8c, 1px -1px 4px #7575ff8c, -1px -1px 4px #7575ff8c, -1px 1px 4px #7575ff8c;
+    display: none;
+    width: 50%;
+    max-width: 200px;
+    border-radius: 8px;
+    height: 8px;
+    overflow: hidden;
+}
+.file-progress>div{
+    border-radius: inherit;
+    background: #7575ff;
+    box-shadow: 1px 1px 4px #7575ff8c, 1px -1px 4px #7575ff8c, -1px -1px 4px #7575ff8c, -1px 1px 4px #7575ff8c;
+    height: 100%;
+    width: 0%;
 }
 
+/* Buttons */
 .audio-btns {
     gap: 24px;
     justify-content: space-between;
@@ -244,6 +265,7 @@ input {
 }
 
 .transcript-text-container {
+    position: relative;
     padding: 16px;
     color: #000000;
     background: linear-gradient(to bottom, #DFE2EA, #F3F3F8);
@@ -254,7 +276,20 @@ input {
     font-style: normal;
     letter-spacing: .7px;
     line-height: 1.4rem;
+    max-height: 300px;
+    overflow: hidden;
 }
+.transcript-text-wrapper{
+    overflow: hidden;
+    overflow-y: scroll;
+    position: relative;
+    height: 100%;
+    max-height: calc(300px - 32px);
+}
+.transcript-text-wrapper::-webkit-scrollbar{
+    width: 0;
+}
+
 
 @media screen and (max-width:651px) {
     .audio-btns{
