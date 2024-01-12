@@ -168,7 +168,7 @@ input {
 }
 /* Progress */
 .file-progress{
-    box-shadow: 1px 1px 4px #7575ff8c, 1px -1px 4px #7575ff8c, -1px -1px 4px #7575ff8c, -1px 1px 4px #7575ff8c;
+    box-shadow: 1px 1px 4px #00c8ff8c, 1px -1px 4px #00c8ff8c, -1px -1px 4px #00c8ff8c, -1px 1px 4px #00c8ff8c;
     display: none;
     width: 50%;
     max-width: 200px;
@@ -178,8 +178,8 @@ input {
 }
 .file-progress>div{
     border-radius: inherit;
-    background: #7575ff;
-    box-shadow: 1px 1px 4px #7575ff8c, 1px -1px 4px #7575ff8c, -1px -1px 4px #7575ff8c, -1px 1px 4px #7575ff8c;
+    background: #00c8ff;
+    box-shadow: 1px 1px 4px #00c8ff8c, 1px -1px 4px #00c8ff8c, -1px -1px 4px #00c8ff8c, -1px 1px 4px #00c8ff8c;
     height: 100%;
     width: 0%;
 }

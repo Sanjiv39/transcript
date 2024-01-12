@@ -194,7 +194,7 @@ const typing = (el) => {
   document.querySelector('#raw').innerHTML = ''
   document.querySelector('#summary').innerHTML = ''
   let str = `${el.toUpperCase()} ${loremstr}`
-  scroller.push(setInterval(()=>{
+  scroller.push(setInterval(() => {
     // console.log('i am scrolling '+el)
     scrollToEnd(el)
   }, 200))
@@ -214,7 +214,7 @@ const typing = (el) => {
       copyBtns.forEach((btn) => {
         btn.disabled = false
       })
-      scroller.forEach((scroller)=>{clearInterval(scroller)})
+      scroller.forEach((scroller) => { clearInterval(scroller) })
     }
   }
   switch (el) {
@@ -243,32 +243,34 @@ uploadDiv.addEventListener("click", () => {
     console.log(file);
     let size = getSize(file.size)
     // if (file.type.includes('audio')) {
-      submitBtn.disabled = true
-      downloadAudio.disabled = true
-      recordDiv.disabled = true
-      let reader = new FileReader()
-      reader.onloadstart = () => {
-        fileName.style.display = 'none'
-        fileProgress.style.display = 'block'
-      }
-      reader.onprogress = (e) => {
-        let status = (e.loaded / e.total) * 100
-        fileProgress.children[0].style.width = `${status}%`
-      }
-      reader.onloadend = () => {
-        console.log(reader.result)
+    submitBtn.disabled = true
+    downloadAudio.disabled = true
+    recordDiv.disabled = true
+    let reader = new FileReader()
+    reader.onloadstart = () => {
+      fileName.style.display = 'none'
+      fileProgress.style.display = 'block'
+    }
+    reader.onprogress = (e) => {
+      let status = (e.loaded / e.total) * 100
+      fileProgress.children[0].style.width = `${status}%`
+    }
+    reader.onloadend = () => {
+      console.log(reader.result)
+      fileProgress.style.display = 'none'
+      if(reader.result){
         setTimeout(() => {
-          fileProgress.style.display = 'none'
           fileName.style.display = 'block'
           fileName.innerText = `${file.name} \n(${size})`
           submitBtn.disabled = false
           recordDiv.disabled = false
         }, 1000)
       }
-      reader.onerror = () => {
-        console.log(reader.error)
-      }
-      reader.readAsArrayBuffer(file)
+    }
+    reader.onerror = () => {
+      console.log(reader.error)
+    }
+    reader.readAsArrayBuffer(file)
     // }
   };
 });
