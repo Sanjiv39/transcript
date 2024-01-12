@@ -258,7 +258,7 @@ uploadDiv.addEventListener("click", () => {
     reader.onloadend = () => {
       console.log(reader.result)
       fileProgress.style.display = 'none'
-      fileName.style.display = 'block'
+      fileName.style.display = 'none'
       if(reader.result){
         setTimeout(() => {
           fileName.style.display = 'block'
