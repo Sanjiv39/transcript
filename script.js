@@ -259,12 +259,12 @@ uploadDiv.addEventListener("click", () => {
       console.log(reader.result)
       fileProgress.style.display = 'none'
       fileName.style.display = 'none'
-      submitBtn.disabled = false
       recordDiv.disabled = false
       if(reader.result){
         setTimeout(() => {
           fileName.style.display = 'block'
           fileName.innerText = `${file.name} \n(${size})`
+          submitBtn.disabled = false
         }, 1000)
       }
     }
