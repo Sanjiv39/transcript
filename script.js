@@ -4,6 +4,7 @@ let fileName = document.querySelector('.filename')
 let fileProgress = document.querySelector('.file-progress')
 let uploadDiv = document.querySelector(".upload.btn");
 let recordDiv = document.querySelector(".record.btn");
+let pauseBtn = document.querySelector('.pause.btn');
 let downloadAudio = document.querySelector('.download-audio')
 let submitBtn = document.querySelector('.submit-btn')
 let copyBtns = document.querySelectorAll('.copy-btn')
@@ -42,14 +43,23 @@ const copy = (text) => {
 // Status changers---------------------------------------------------------------------------------
 
 const changeRecordStatus = (status) => {
+  status ? pauseBtn.style.display = 'flex' : pauseBtn.style.display = 'none'
   status ? submitBtn.disabled = true : submitBtn.disabled = false
   status ? uploadDiv.disabled = true : uploadDiv.disabled = false
   status ? downloadAudio.disabled = true : downloadAudio.disabled = false
   recordDiv.classList.toggle("recording");
   let img = status ? 'mic-off' : 'mic'
   let text = status ? 'Stop Recording' : 'Record Audio'
-  let micImg = `<img src="./assets/${img}.svg" alt="Record Icon" />`
+  let micImg = `<img src="./assets/${img}.svg" alt="Record/Stop Icon" />`
   recordDiv.innerHTML = micImg + text
+}
+
+const changePauseStatus = (status) => {
+  let img = status ? 'play' : 'pause'
+  let text = status ? 'Resume Recording' : 'Pause Recording'
+  let imgStr = `<img src="./assets/${img}.svg" alt="Play/Pause Icon" />`
+  status ? pauseBtn.classList.add('paused') : pauseBtn.classList.remove('paused')
+  pauseBtn.innerHTML = imgStr + text
 }
 
 const toggleRecordBtn = (type) => {
@@ -115,13 +125,13 @@ const audio = {
             //save the reference of the stream to be able to stop it when necessary
             audio.streamBeingCaptured = stream;
             console.log(stream);
-            changeRecordStatus(true)
             fileName.style.display = 'none'
+            changeRecordStatus(true)
+            changePauseStatus(false)
             //create a media recorder instance by passing that stream into the MediaRecorder constructor
             audio.mediaRecorder = new MediaRecorder(
               stream
-            ); /*the MediaRecorder interface of the MediaStream Recording
-                    API provides functionality to easily record media*/
+            ); /*the MediaRecorder interface of the MediaStream Recording API provides functionality to easily record media*/
 
             //clear previously saved audio Blobs, if any
             audio.audioBlobs = [];
@@ -129,6 +139,7 @@ const audio = {
             //add a dataavailable event listener in order to store the audio data Blobs when recording
             audio.mediaRecorder.addEventListener("dataavailable", (event) => {
               //store audio Blob object
+              console.log('chunk')
               audio.audioBlobs.push(event.data);
             });
 
@@ -172,6 +183,29 @@ const audio = {
     audio.streamBeingCaptured
       .getTracks() //get all tracks from the stream
       .forEach((track) => track.stop()); //stop each one
+  },
+  pause: async () => {
+    return new Promise((resolve) => {
+      audio.mediaRecorder.addEventListener("pause", () => {
+        // console.log(audio.mediaRecorder.state)
+        let blob = audio.audioBlobs
+        resolve(audio.mediaRecorder.state);
+      });
+      changePauseStatus(true)
+      //pause the recording feature
+      audio.mediaRecorder.pause();
+    });
+  },
+  resume: async () => {
+    return new Promise((resolve) => {
+      audio.mediaRecorder.addEventListener("resume", () => {
+        // console.log(audio.mediaRecorder.state)
+        let blob = audio.audioBlobs
+        resolve(audio.mediaRecorder.state);
+      });
+      changePauseStatus(false)
+      audio.mediaRecorder.resume()
+    });
   },
   download: () => {
     if (audio.audioBlob) {
@@ -260,7 +294,7 @@ uploadDiv.addEventListener("click", () => {
       fileProgress.style.display = 'none'
       fileName.style.display = 'none'
       recordDiv.disabled = false
-      if(reader.result){
+      if (reader.result) {
         setTimeout(() => {
           fileName.style.display = 'block'
           fileName.innerText = `${file.name} \n(${size})`
@@ -283,6 +317,14 @@ recordDiv.addEventListener("click", async () => {
     console.log(await audio.record());
   }
 });
+
+pauseBtn.addEventListener('click', async () => {
+  if (audio.mediaRecorder?.state === 'paused') {
+    console.log(await audio.resume());
+  } else {
+    console.log(await audio.pause());
+  }
+})
 
 downloadAudio.addEventListener('click', () => {
   audio.download()

@@ -217,6 +217,10 @@ input {
     height: 100%;
 }
 
+.pause.btn{
+    display: none;
+}
+
 /* Raw Transcript Container */
 .raw-transcript-container {
     padding: 0 24px 24px;
