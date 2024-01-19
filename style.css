@@ -221,6 +221,11 @@ input {
     display: none;
 }
 
+.submit-btn.btn{
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
 /* Raw Transcript Container */
 .raw-transcript-container {
     padding: 0 24px 24px;
@@ -283,6 +288,9 @@ input {
     max-height: 300px;
     overflow: hidden;
 }
+.transcript-text-container:is(.raw,.summary){
+    margin-top: 20px;
+}
 .transcript-text-wrapper{
     overflow: hidden;
     overflow-y: scroll;
@@ -294,6 +302,9 @@ input {
     width: 0;
 }
 
+.transcript-hint{
+    margin-top: -2px;
+}
 
 @media screen and (max-width:651px) {
     .audio-btns{

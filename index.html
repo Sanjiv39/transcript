@@ -51,10 +51,6 @@
                         <img src="./assets/download.svg" alt="Download Icon" /> Download
                         Audio
                     </button>
-                    <button class="btn flex pad-min brd-min bg-green submit-btn" disabled>
-                        <img src="./assets/analysis.svg" alt="Analysis Icon" />
-                        Submit for analysis
-                    </button>
                 </div>
                 <!-- Raw Transcript -->
                 <div class="raw-transcript-container">
@@ -63,8 +59,10 @@
                         <button disabled class="copy-btn btn">Copy <img src="./assets/copy.svg"
                                 alt="Copy Icon" /></button>
                     </h3>
-                    <div class="transcript-text-container">
-                        <div class="transcript-text-wrapper" id="raw">Record or Upload Audio to generate raw transcript
+                    <p class="transcript-hint">This section shows the transcription of the audio submitted above.
+                    </p>
+                    <div class="transcript-text-container raw">
+                        <div class="transcript-text-wrapper" id="raw">Record Audio to generate it's Raw Transcript
                         </div>
                     </div>
                 </div>
@@ -75,8 +73,14 @@
                         <button disabled class="copy-btn btn">Copy <img src="./assets/copy.svg"
                                 alt="Copy Icon" /></button>
                     </h3>
-                    <div class="transcript-text-container">
-                        <div class="transcript-text-wrapper" id="summary">Record or Upload Audio to generate summary of the raw transcript
+                    <p class="transcript-hint">This section is meant to generate a summary of the raw transcript. In future, we also intend to add the patient case history to this summary, so as to get a quick glance of the developments over time.
+                    </p>
+                    <button class="btn flex pad-min brd-min bg-green submit-btn" disabled>
+                        <img src="./assets/analysis.svg" alt="Analysis Icon" />
+                        Generate Summary
+                    </button>
+                    <div class="transcript-text-container summary">
+                        <div class="transcript-text-wrapper" id="summary">Generate the Summary of the Raw Transcript
                         </div>
                     </div>
                 </div>
