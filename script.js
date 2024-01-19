@@ -7,12 +7,19 @@ let recordDiv = document.querySelector(".record.btn");
 let pauseBtn = document.querySelector('.pause.btn');
 let downloadAudio = document.querySelector('.download-audio')
 let submitBtn = document.querySelector('.submit-btn')
+let generateSoapBtn = document.querySelector('.generate-soap')
 let copyBtns = document.querySelectorAll('.copy-btn')
 let textBoxes = document.querySelectorAll('.transcript-text-wrapper')
 let rawStatus = false
 let summaryStatus = false
 let date = new Date()
 let scroller = []
+let rawTranscript = ''
+let transcriptErr = false
+let transcriptUploaded = false
+let soapErr = false
+let soapStatus = false
+let soapUrl = ''
 
 // Utils functions
 const getDateStr = () => {
@@ -40,11 +47,81 @@ const copy = (text) => {
   navigator.clipboard.writeText(text)
 }
 
+// API
+const post = (file) => {
+  let formData = new FormData();
+  formData.append('audio_file', file);
+  fetch('http://44.222.228.231:5000/get_transcription', {
+    method: 'POST',
+    body: formData
+  }).then(response => response.json())
+    .then(data => {
+      console.log('Success:', data);
+      rawTranscript = data.transcription
+      transcriptUploaded = true
+      typing('raw', data.transcription)
+      submitBtn.disabled = true
+      copyBtns[1].disabled = true
+      document.querySelector('#raw').innerHTML = ''
+      document.querySelector('#summary').innerHTML = ''
+    }).catch((error) => {
+      console.error('Error:', error);
+      transcriptErr = true
+    }).finally(() => {
+      uploadDiv.disabled = false
+      recordDiv.disabled = false;
+    });
+}
+const generateSummary = (text) => {
+  // console.log(text)
+  fetch('http://44.222.228.231:5000/get_summary', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ 'input_text': text })
+  }).then(response => response.json())
+    .then(data => {
+      console.log('Success:', data);
+      typing('summary', data.summary)
+      generateSoapBtn.disabled = false
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+      submitBtn.disabled = false
+    })
+    .finally(() => {
+      recordDiv.disabled = false;
+      uploadDiv.disabled = false
+    });
+}
+const generateSOAP = (text) => {
+  // console.log(text)
+  fetch('http://44.222.228.231:5000/get_soap_notes', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ 'input_text': text })
+  }).then(response => response.json())
+    .then(data => {
+      console.log('Success:', data);
+      soapUrl = data.pdf_file_path
+      soapErr = false
+      soapStatus = true
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+      soapErr = true
+      generateSoapBtn.disabled = false
+    })
+    .finally(() => {
+      recordDiv.disabled = false;
+      uploadDiv.disabled = false
+    });
+}
+
 // Status changers---------------------------------------------------------------------------------
 
 const changeRecordStatus = (status) => {
   status ? pauseBtn.style.display = 'flex' : pauseBtn.style.display = 'none'
-  status ? submitBtn.disabled = true : submitBtn.disabled = false
+  status ? submitBtn.disabled = true : ''
   status ? uploadDiv.disabled = true : uploadDiv.disabled = false
   status ? downloadAudio.disabled = true : downloadAudio.disabled = false
   recordDiv.classList.toggle("recording");
@@ -66,24 +143,17 @@ const toggleRecordBtn = (type) => {
   switch (type) {
     case 'raw':
       rawStatus = true
+      submitBtn.disabled = false
       break;
     case 'summary':
       summaryStatus = true
+      submitBtn.disabled = true
       break;
     default:
       break;
   }
-  setTimeout(() => {
-    let status = rawStatus && summaryStatus
-    if (status) {
-      recordDiv.disabled = false
-      uploadDiv.disabled = false
-      submitBtn.disabled = true
-    } else {
-      recordDiv.disabled = true
-      uploadDiv.disabled = true
-    }
-  }, 500)
+  recordDiv.disabled = false
+  uploadDiv.disabled = false
 }
 
 const scrollToEnd = (id) => {
@@ -102,7 +172,7 @@ const audio = {
     audio.audioBlobs = [];
     audio.mediaRecorder = undefined;
     audio.streamBeingCaptured = undefined;
-    recordDiv.innerText = "Record";
+    // recordDiv.innerText = "Record";
   },
   record: async () => {
     //Feature Detection
@@ -125,6 +195,9 @@ const audio = {
             //save the reference of the stream to be able to stop it when necessary
             audio.streamBeingCaptured = stream;
             console.log(stream);
+            generateSoapBtn.disabled = true
+            generateSoapBtn.classList.remove('download-soap')
+            generateSoapBtn.innerHTML = 'Generate SOAP Document'
             fileName.style.display = 'none'
             changeRecordStatus(true)
             changePauseStatus(false)
@@ -163,6 +236,7 @@ const audio = {
         let audioBlob = new Blob(audio.audioBlobs, { type: mimeType });
         audio.audioBlob = audioBlob
         downloadAudio.disabled = false
+        // post(audioBlob)
         //resolve promise with the single audio blob representing the recorded audio
         resolve(audioBlob);
         changeRecordStatus(false)
@@ -224,10 +298,8 @@ const audio = {
 
 let loremstr = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam et massa ut metus blandit aliquam nec a odio. Nullam fermentum lobortis volutpat. Aliquam cursus lorem eget ex pharetra pellentesque. Suspendisse ac consequat turpis. Nulla facilisi. Vivamus facilisis diam at mauris accumsan aliquam. Aliquam ut velit hendrerit, mollis nunc eu, feugiat risus. Morbi at nisi nunc. In sem quam, commodo et tortor condimentum, fermentum vulputate justo. Mauris malesuada urna tellus, dignissim bibendum metus tristique sit amet. Mauris convallis porttitor leo nec gravida. Nullam vitae lectus ante. Mauris hendrerit dui purus. Morbi sit amet convallis massa, vitae tempor tortor. Nunc sed nulla.'
 
-const typing = (el) => {
-  document.querySelector('#raw').innerHTML = ''
-  document.querySelector('#summary').innerHTML = ''
-  let str = `${el.toUpperCase()} ${loremstr}`
+const typing = (el, str = '') => {
+  let btn = el === 'raw' ? copyBtns[0] : el === 'summary' ? copyBtns[1] : undefined
   scroller.push(setInterval(() => {
     // console.log('i am scrolling '+el)
     scrollToEnd(el)
@@ -239,15 +311,11 @@ const typing = (el) => {
     onBegin: () => {
       recordDiv.disabled = true;
       uploadDiv.disabled = true
-      copyBtns.forEach((btn) => {
-        btn.disabled = true
-      })
+      btn.disabled = true
     },
     onComplete: () => {
       toggleRecordBtn(el);
-      copyBtns.forEach((btn) => {
-        btn.disabled = false
-      })
+      btn.disabled = false
       scroller.forEach((scroller) => { clearInterval(scroller) })
     }
   }
@@ -264,7 +332,6 @@ const typing = (el) => {
   }
 }
 
-
 uploadDiv.addEventListener("click", () => {
   let input = document.createElement("input");
   input.type = "file";
@@ -275,44 +342,49 @@ uploadDiv.addEventListener("click", () => {
     let files = [...input.files];
     let file = files[0];
     console.log(file);
-    let size = getSize(file.size)
-    // if (file.type.includes('audio')) {
-    submitBtn.disabled = true
-    downloadAudio.disabled = true
-    recordDiv.disabled = true
-    let reader = new FileReader()
-    reader.onloadstart = () => {
-      fileName.style.display = 'none'
+    let size = getSize(file.size);
+    if (file.type.includes('audio')) {
+      transcriptErr = false
+      transcriptUploaded = false
+      recordDiv.disabled = true;
+      downloadAudio.disabled = true;
+      generateSoapBtn.disabled = true
+      generateSoapBtn.classList.remove('download-soap')
+      generateSoapBtn.innerHTML = 'Generate SOAP Document'
+      fileName.style.display = 'block'
+      fileName.innerText = `${file.name} \n(${size})`
+      post(file)
       fileProgress.style.display = 'block'
+      let percent = 5
+      let loader = setInterval(() => {
+        if(percent<95){
+          fileProgress.children[0].style.width = `${percent}%`
+        }
+        if (transcriptErr) {
+          fileProgress.style.display = 'none'
+          transcriptErr = false
+          clearInterval(loader)
+        }
+        if (transcriptUploaded) {
+          fileProgress.children[0].style.width = `99%`
+          setTimeout(() => {
+            fileProgress.children[0].style.width = `0%`
+            transcriptUploaded = false
+            clearInterval(loader)
+            fileProgress.style.display = 'none'
+          }, 100)
+        }
+        percent++
+      }, 500)
     }
-    reader.onprogress = (e) => {
-      let status = (e.loaded / e.total) * 100
-      fileProgress.children[0].style.width = `${status}%`
-    }
-    reader.onloadend = () => {
-      console.log(reader.result)
-      fileProgress.style.display = 'none'
-      fileName.style.display = 'none'
-      recordDiv.disabled = false
-      if (reader.result) {
-        setTimeout(() => {
-          fileName.style.display = 'block'
-          fileName.innerText = `${file.name} \n(${size})`
-          submitBtn.disabled = false
-        }, 1000)
-      }
-    }
-    reader.onerror = () => {
-      console.log(reader.error)
-    }
-    reader.readAsArrayBuffer(file)
-    // }
   };
 });
 
 recordDiv.addEventListener("click", async () => {
   if (recordDiv.classList.contains("recording")) {
-    console.log(await audio.stop());
+    await audio.stop();
+    console.log(audio.audioBlob)
+    post(audio.audioBlob)
   } else {
     console.log(await audio.record());
   }
@@ -332,12 +404,45 @@ downloadAudio.addEventListener('click', () => {
 
 submitBtn.addEventListener('click', () => {
   submitBtn.disabled = true
-  typing('raw')
-  typing('summary')
+  recordDiv.disabled = true;
+  uploadDiv.disabled = true
+  generateSummary(rawTranscript)
 })
 
 copyBtns.forEach((btn) => {
   btn.addEventListener('click', () => {
     copy(btn.parentElement.nextElementSibling.children[0].innerText)
   })
+})
+
+generateSoapBtn.addEventListener('click', () => {
+  if (!generateSoapBtn.classList.contains('download-soap')) {
+    generateSOAP(rawTranscript)
+    soapErr = false
+    soapStatus = false
+    soapUrl = ''
+    let i = 0
+    generateSoapBtn.disabled = true
+    let loader = setInterval(() => {
+      if (soapStatus === true) {
+        generateSoapBtn.innerHTML = `<img src='./assets/download.svg' alt='Download'/> Download SOAP Document`
+        generateSoapBtn.disabled = false
+        generateSoapBtn.classList.add('download-soap')
+        clearInterval(loader)
+      } else if (i > 45 && soapErr === false) {
+        generateSoapBtn.innerHTML = 'Please Wait....'
+      } else if (soapErr === true) {
+        generateSoapBtn.innerHTML = 'Generate SOAP Document'
+        generateSoapBtn.disabled = false
+        clearInterval(loader)
+      } else {
+        generateSoapBtn.innerHTML = `${45 - i}`
+      }
+      i++
+    }, 1000)
+  } else {
+    window.location.href = soapUrl
+    generateSoapBtn.classList.remove('download-soap')
+    generateSoapBtn.innerHTML = 'Generate SOAP Document'
+  }
 })
