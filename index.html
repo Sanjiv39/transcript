@@ -1,101 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TheraSync</title>
-    <link rel="shortcut icon" href="https://framerusercontent.com/images/tYdDuQMxYFUc2Kyjwic8sVQFb4Y.png"
-        type="image/x-icon" />
+    <link
+      rel="shortcut icon"
+      href="https://framerusercontent.com/images/tYdDuQMxYFUc2Kyjwic8sVQFb4Y.png"
+      type="image/x-icon"
+    />
     <link rel="stylesheet" href="./style.css" />
     <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="container">
-        <div class="max-width-wrapper">
-            <div class="navbar">
-                <div class="nav-wrap flex jt-cen al-cen">
-                    <img class="nav-logo" src="./assets/logo.webp" alt="logo" srcset="" />
-                </div>
-            </div>
-
-            <div class="main-container">
-                <div class="header-title">
-                    <h2>
-                        Upload or Record your audio samples and our GenAI will do the
-                        rest!
-                    </h2>
-                    <p>
-                        ✨ Our GenAI will transcript the audio and generate a summary of
-                        the conversation along with a SOAP document.
-                    </p>
-                </div>
-                <div class="filename brd-min"></div>
-                <div class="file-progress"><div></div></div>
-                <!-- Record Upload Pause -->
-                <div class="audio-btns flex jt-sp-b al-cen">
-                    <button class="btn pad-min brd-min bg-green upload">
-                        <img src="./assets/upload.svg" alt="Upload Icon" /> Upload Audio
-                    </button>
-                    <button class="btn pad-min brd-min bg-green record">
-                        <img src="./assets/mic.svg" alt="Record/Stop Icon" /> Record Audio
-                    </button>
-                    <button class="btn pad-min brd-min bg-green pause">
-                        <img src="./assets/pause.svg" alt="Play/Pause Icon" /> Pause Recording
-                    </button>
-                </div>
-                <!-- Download / Submit for analysis -->
-                <div class="audio-btns flex jt-sp-b al-cen">
-                    <button class="btn pad-min brd-min bg-green download-icon download-audio" disabled="true">
-                        <img src="./assets/download.svg" alt="Download Icon" /> Download
-                        Audio
-                    </button>
-                </div>
-                <!-- Raw Transcript -->
-                <div class="raw-transcript-container">
-                    <h3>
-                        <span>📑 Raw Transcript Text </span>
-                        <button disabled class="copy-btn btn">Copy <img src="./assets/copy.svg"
-                                alt="Copy Icon" /></button>
-                    </h3>
-                    <p class="transcript-hint">This section shows the transcription of the audio submitted above.
-                    </p>
-                    <div class="transcript-text-container raw">
-                        <div class="transcript-text-wrapper" id="raw">Record Audio to generate it's Raw Transcript
-                        </div>
-                    </div>
-                </div>
-                <!-- Summary -->
-                <div class="raw-transcript-container">
-                    <h3>
-                        <span>📑 Summary Docs </span>
-                        <button disabled class="copy-btn btn">Copy <img src="./assets/copy.svg"
-                                alt="Copy Icon" /></button>
-                    </h3>
-                    <p class="transcript-hint">This section is meant to generate a summary of the raw transcript. In future, we also intend to add the patient case history to this summary, so as to get a quick glance of the developments over time.
-                    </p>
-                    <button class="btn flex pad-min brd-min bg-green submit-btn" disabled>
-                        <img src="./assets/analysis.svg" alt="Analysis Icon" />
-                        Generate Summary
-                    </button>
-                    <div class="transcript-text-container summary">
-                        <div class="transcript-text-wrapper" id="summary">Generate the Summary of the Raw Transcript
-                        </div>
-                    </div>
-                </div>
-                <!-- Soap -->
-                <div class="audio-btns flex jt-sp-b al-cen">
-                    <button disabled="true" class="btn pad-min brd-min bg-green generate-soap">
-                        Generate SOAP
-                        Document
-                    </button>
-                </div>
-            </div>
+      <div class="max-width-wrapper">
+        <div class="navbar">
+          <div class="nav-wrap flex jt-cen al-cen">
+            <img
+              class="nav-logo"
+              src="./assets/logo.webp"
+              alt="logo"
+              srcset=""
+            />
+          </div>
         </div>
+
+        <div class="main-container">
+          <div class="header-title">
+            <h2>
+              Upload or Record your audio samples and our GenAI will do the
+              rest!
+            </h2>
+            <p>
+              ✨ Our GenAI will transcript the audio and generate a summary of
+              the conversation along with a SOAP document.
+            </p>
+          </div>
+          <div class="filename brd-min"></div>
+          <div class="file-progress"><div></div></div>
+          <!-- Record Upload Pause -->
+          <div class="audio-btns flex jt-sp-b al-cen">
+            <button class="btn pad-min brd-min bg-green upload">
+              <img src="./assets/upload.svg" alt="Upload Icon" /> Upload Audio
+            </button>
+            <button class="btn pad-min brd-min bg-green record">
+              <img src="./assets/mic.svg" alt="Record/Stop Icon" /> Record Audio
+            </button>
+            <button class="btn pad-min brd-min bg-green pause">
+              <img src="./assets/pause.svg" alt="Play/Pause Icon" /> Pause
+              Recording
+            </button>
+          </div>
+          <!-- Download / Submit for analysis -->
+          <div class="audio-btns flex jt-sp-b al-cen">
+            <button
+              class="btn pad-min brd-min bg-green download-icon download-audio"
+              disabled="true"
+            >
+              <img src="./assets/download.svg" alt="Download Icon" /> Download
+              Audio
+            </button>
+          </div>
+          <!-- Raw Transcript -->
+          <div class="raw-transcript-container">
+            <h3>
+              <span>📑 Raw Transcript Text </span>
+              <button disabled class="copy-btn btn">
+                Copy <img src="./assets/copy.svg" alt="Copy Icon" />
+              </button>
+            </h3>
+            <p class="transcript-hint">
+              This section shows the transcription of the audio submitted above.
+            </p>
+            <div class="transcript-text-container raw">
+              <div class="transcript-text-wrapper" id="raw">
+                Record Audio to generate it's Raw Transcript
+              </div>
+            </div>
+          </div>
+          <!-- Summary -->
+          <div class="raw-transcript-container">
+            <h3>
+              <span>📑 Summary Docs </span>
+              <button disabled class="copy-btn btn">
+                Copy <img src="./assets/copy.svg" alt="Copy Icon" />
+              </button>
+            </h3>
+            <p class="transcript-hint">
+              This section is meant to generate a summary of the raw transcript.
+              In future, we also intend to add the patient case history to this
+              summary, so as to get a quick glance of the developments over
+              time.
+            </p>
+            <button
+              class="btn flex pad-min brd-min bg-green submit-btn"
+              disabled
+            >
+              <img src="./assets/analysis.svg" alt="Analysis Icon" />
+              Generate Summary
+            </button>
+            <div class="transcript-text-container summary">
+              <div class="transcript-text-wrapper" id="summary">
+                Generate the Summary of the Raw Transcript
+              </div>
+            </div>
+          </div>
+          <!-- Soap -->
+          <div class="audio-btns flex jt-sp-b al-cen">
+            <button
+              disabled="true"
+              class="btn pad-min brd-min bg-green generate-soap"
+            >
+              Generate SOAP Document
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script src="./script.js"></script>
-</body>
-
+  </body>
 </html>
