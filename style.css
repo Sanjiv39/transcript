@@ -26,10 +26,11 @@ input {
 }
 
 /* Utils class */
-.btn{
+.btn {
     cursor: pointer;
 }
-.btn:disabled{
+
+.btn:disabled {
     opacity: 0.6;
     cursor: default;
 }
@@ -71,7 +72,8 @@ input {
     background: var(--greeny);
     color: var(--dark-grey);
 }
-.bg-green:hover:not(:disabled){
+
+.bg-green:hover:not(:disabled) {
     box-shadow: 1px 1px 5px var(--trans-greeny), 1px -1px 5px var(--trans-greeny), -1px -1px 5px var(--trans-greeny), -1px 1px 5px var(--trans-greeny);
 }
 
@@ -154,7 +156,7 @@ input {
 }
 
 /* Div showing file names */
-.filename{
+.filename {
     display: none;
     background: var(--light-grey-gradient);
     padding: 16px;
@@ -166,8 +168,9 @@ input {
     word-wrap: break-word;
     line-break: anywhere;
 }
+
 /* Progress */
-.file-progress{
+.file-progress {
     box-shadow: 1px 1px 4px #00c8ff8c, 1px -1px 4px #00c8ff8c, -1px -1px 4px #00c8ff8c, -1px 1px 4px #00c8ff8c;
     display: none;
     width: 50%;
@@ -176,7 +179,8 @@ input {
     height: 8px;
     overflow: hidden;
 }
-.file-progress>div{
+
+.file-progress>div {
     border-radius: inherit;
     background: #00c8ff;
     box-shadow: 1px 1px 4px #00c8ff8c, 1px -1px 4px #00c8ff8c, -1px -1px 4px #00c8ff8c, -1px 1px 4px #00c8ff8c;
@@ -193,7 +197,8 @@ input {
     font-family: 'Inter Medium', 'Inter', sans-serif;
 }
 
-.audio-btns>.btn, .btn.flex {
+.audio-btns>.btn,
+.btn.flex {
     position: relative;
     display: flex;
     justify-content: center;
@@ -203,7 +208,8 @@ input {
     transition: all ease 100ms;
 }
 
-.audio-btns>.btn img, .btn.flex img {
+.audio-btns>.btn img,
+.btn.flex img {
     width: 28px;
     height: 28px;
 }
@@ -217,11 +223,11 @@ input {
     height: 100%;
 }
 
-.pause.btn{
+.pause.btn {
     display: none;
 }
 
-.submit-btn.btn{
+.submit-btn.btn {
     margin: 0 auto;
     margin-top: 20px;
 }
@@ -288,26 +294,29 @@ input {
     max-height: 300px;
     overflow: hidden;
 }
-.transcript-text-container:is(.raw,.summary){
+
+.transcript-text-container:is(.raw, .summary) {
     margin-top: 20px;
 }
-.transcript-text-wrapper{
+
+.transcript-text-wrapper {
     overflow: hidden;
     overflow-y: scroll;
     position: relative;
     height: 100%;
     max-height: calc(300px - 32px);
 }
-.transcript-text-wrapper::-webkit-scrollbar{
+
+.transcript-text-wrapper::-webkit-scrollbar {
     width: 0;
 }
 
-.transcript-hint{
+.transcript-hint {
     margin-top: -2px;
 }
 
 @media screen and (max-width:651px) {
-    .audio-btns{
+    .audio-btns {
         flex-direction: column;
         align-items: center;
     }
