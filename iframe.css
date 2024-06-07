@@ -1,0 +1,14 @@
+.huma-chat-main{
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    
+}
+iframe{
+    /* height: 500px; */
+    /* background: transparent; */
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    border: none;
+}
